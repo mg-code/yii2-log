@@ -1,7 +1,7 @@
 {
     "name": "mg-code/yii2-log",
     "description": "A collection of useful log targets.",
-    "keywords": ["yii2", "extension", "log", "logstash"],
+    "keywords": ["yii2", "extension", "log", "logstash", "json"],
     "homepage": "https://github.com/mg-code/yii2-log",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
