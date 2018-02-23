@@ -1,0 +1,22 @@
+{
+    "name": "mg-code/yii2-log",
+    "description": "A collection of useful log targets.",
+    "keywords": ["yii2", "extension", "log", "logstash"],
+    "homepage": "https://github.com/mg-code/yii2-log",
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Maris Graudins",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "mgcode\\log\\": ""
+        }
+    }
+}
