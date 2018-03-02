@@ -84,7 +84,7 @@ class JsonFileTarget extends FileTarget
     protected function parseText($text)
     {
         if ($text instanceof \Throwable || $text instanceof \Exception) {
-            return ['@message' => (string) $text];
+            return ['message' => (string) $text];
         }
         $type = gettype($text);
         switch ($type) {
@@ -92,11 +92,11 @@ class JsonFileTarget extends FileTarget
                 return $text;
             case 'string':
             case 'integer':
-                return ['@message' => $text];
+                return ['message' => $text];
             case 'object':
                 return get_object_vars($text);
             default:
-                return ['@message' => \Yii::t('log', "Warning, wrong log message type '{$type}'")];
+                return ['message' => \Yii::t('log', "Warning, wrong log message type '{$type}'")];
         }
     }
 
@@ -114,7 +114,7 @@ class JsonFileTarget extends FileTarget
 
         $result = ArrayHelper::merge(
             $this->parseText($text),
-            ['level' => $level, 'category' => $category, '@timestamp' => $timestamp]
+            ['level' => $level, 'category' => $category, 'timestamp' => $timestamp]
         );
         if (isset($message[4]) === true) {
             $result['trace'] = $message[4];
