@@ -57,12 +57,12 @@ class JsonFileTarget extends FileTarget
         $context = [
             'application' => \Yii::$app->id,
         ];
-
         if (($user = \Yii::$app->get('user', false)) !== null) {
             /** @var \yii\web\User $user */
             $context['userId'] = $user->getId();
         }
-        return array_merge($context, ArrayHelper::filter($GLOBALS, $this->logVars));
+        $context['context'] = ArrayHelper::filter($GLOBALS, $this->logVars);
+        return $context;
     }
 
     /**
