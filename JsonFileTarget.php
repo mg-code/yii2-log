@@ -114,7 +114,7 @@ class JsonFileTarget extends FileTarget
 
         $result = ArrayHelper::merge(
             $this->parseText($text),
-            ['level' => $level, 'category' => $category, 'timestamp' => $timestamp]
+            ['level' => $level, 'category' => $category, '@timestamp' => $timestamp]
         );
         if (isset($message[4]) === true) {
             $result['trace'] = $message[4];
