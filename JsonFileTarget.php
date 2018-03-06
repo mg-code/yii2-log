@@ -3,12 +3,12 @@
 namespace mgcode\log;
 
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\log\FileTarget;
 use yii\log\Logger;
 
 /**
  * Log target that saves logs to json file.
- *
  * This log target is inspired by this package: https://github.com/index0h/yii2-log
  * Some of functions were used and rewritten.
  */
@@ -45,7 +45,8 @@ class JsonFileTarget extends FileTarget
      */
     public function formatMessage($message)
     {
-        return json_encode($this->prepareMessage($message));
+        $message = $this->sanitizeMessage($message);
+        return Json::encode($this->prepareMessage($message));
     }
 
     /**
@@ -121,5 +122,21 @@ class JsonFileTarget extends FileTarget
         }
 
         return $result;
+    }
+
+    /**
+     * Sanitize message parameters.
+     * Fixes bug with invalid utf-8 characters.
+     * @param array $message
+     * @return array
+     */
+    protected function sanitizeMessage($message)
+    {
+        array_walk_recursive($message, function (&$value) {
+            if (is_string($value)) {
+                $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+            }
+        });
+        return $message;
     }
 }
