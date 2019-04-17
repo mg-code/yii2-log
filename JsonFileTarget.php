@@ -55,14 +55,12 @@ class JsonFileTarget extends FileTarget
      */
     protected function getContextMessage()
     {
-        $context = [
-            'application' => \Yii::$app->id,
-        ];
+        $context = ArrayHelper::filter($GLOBALS, $this->logVars);
         if (($user = \Yii::$app->get('user', false)) !== null) {
             /** @var \yii\web\User $user */
             $context['userId'] = $user->getId();
         }
-        $context['context'] = ArrayHelper::filter($GLOBALS, $this->logVars);
+        $context['context'] = $context;
         return $context;
     }
 
@@ -115,7 +113,13 @@ class JsonFileTarget extends FileTarget
 
         $result = ArrayHelper::merge(
             $this->parseText($text),
-            ['level' => $level, 'category' => $category, '@timestamp' => $timestamp]
+            [
+                '@timestamp' => $timestamp,
+                '@version' => 1,
+                'type' => \Yii::$app->id,
+                'level' => $level, 
+                'category' => $category,
+            ]
         );
         if (isset($message[4]) === true) {
             $result['trace'] = $message[4];
